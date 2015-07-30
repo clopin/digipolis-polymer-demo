@@ -8,37 +8,25 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<dom-module id="my-greeting">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="dpd-list">
   <style>
     :host {
       display: block;
     }
-
-    @media (max-width: 600px) {
-      h1.paper-font-display1 {
-        font-size: 24px;
-      }
-    }
   </style>
   <template>
-    <h1 class="paper-font-display1"><span>{{greeting}}</span></h1>
-    <span class="paper-font-body2">Update text to change the greeting.</span>
-    <!-- Listens for "input" event and sets greeting to <input>.value -->
-    <input class="paper-font-body2" value="{{greeting::input}}">
+  <firebase-collection id="fbEntries" location="https://digipolispolymerdemo.firebaseIO.com/entries" data="{{entries}}"></firebase-collection>
+    <template is="dom-repeat" items="{{entries}}">
+      <dpd-item name="{{item.name}}"></dpd-item>
+    </template>
   </template>
 </dom-module>
 <script>
-  (function() {
-    Polymer({
-      is: 'my-greeting',
-
-      properties: {
-        greeting: {
-          type: String,
-          value: 'Welcome!',
-          notify: true
-        }
-      }
-    });
-  })();
+(function() {
+  Polymer({
+    is: 'dpd-list'
+  });
+})();
 </script>
